@@ -5,7 +5,9 @@ import model.JournalEntry;
 import model.Journal.*;
 import model.JournalEntry.*;
 
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 // Journaling app with capabilities to create new entries, save and search entries based on date/mood.
@@ -58,7 +60,7 @@ public class JournalApp {
         } else if (command.equals("s")) {
             searchEntry();
         } else if (command.equals("p")) {
-            promptEntry();
+            //promptEntry();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -75,16 +77,76 @@ public class JournalApp {
 
     // how to create new journal each time?
     private void newEntry() {
-        JournalEntry n1 = new JournalEntry();
-        journal.addEntry(n1);
-        System.out.print(journal);
+        journal.addEntry(new JournalEntry());
+        System.out.print(journal.getNames());
     }
 
-    private void searchEntry(){
-        //stub
+    private void searchEntry() {
+        System.out.println("\nSearch by:");
+        System.out.println("\tM -> Mood");
+        System.out.println("\tT -> Title");
+        System.out.println("\tG -> Go Back");
+        System.out.println("\tQ -> Quit");
+        String searcher = input.next();
+        processSearch(searcher);
+
     }
 
-    private void promptEntry(){
+    private void processSearch(String searcher) {
+        if (searcher.equals("M")) {
+            System.out.println("what mood would you like to search for?");
+            int desired = Integer.parseInt(input.next());
+            moodSearch(desired);
+        } else if (searcher.equals("T")) {
+            System.out.println(journal.getNames());
+            System.out.println("enter desired title");
+            String desired = input.next();
+            titleSearch(desired);
+        } else if (searcher.equals("G")) {
+            displayOptions();
+            String command = input.next();
+            processCommand(command);
+        } else {
+            System.out.println("Selection not valid...");
+        }
+    }
+
+
+
+    private void moodSearch(int desired) {
+        Journal desiredMood = new Journal();
+        for (JournalEntry j: journal.getJournals()) {
+            if (j.getMood() == desired) {
+                desiredMood.addEntry(j);
+            }
+        }
+        System.out.println(desiredMood.getNames());
+
+    }
+
+    private void titleSearch(String desired) {
+        Journal desiredTitle = new Journal();
+        for (JournalEntry j: journal.getJournals()) {
+            if (desired.equals(j.getTitle())) {
+                desiredTitle.addEntry(j);
+            }
+        }
+        if (desiredTitle.getSize() == 0) {
+            System.out.println("Sorry desired journal does not exist, please watch spelling");
+        } else {
+            System.out.println(desiredTitle.getNames());
+            System.out.println("Please select one of the above journals, the first journal on the left is entried #1"
+                    + " each journal there after has number +1 the previous");
+            int selected = input.nextInt();
+            getEntry1(selected, desiredTitle);
+        }
+    }
+
+    private String getEntry1(int num, Journal desired) {
+        return desired.getJournalEntry(num).getEntry();
+    }
+
+    private void promptEntry() {
         // stub
     }
 }
