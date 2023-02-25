@@ -3,6 +3,7 @@ package model;
 
 import java.util.Date;
 import java.util.Scanner;
+import ui.JournalApp.*;
 
 public class JournalEntry {
     private Scanner words;
@@ -19,14 +20,25 @@ public class JournalEntry {
         response = "";
         title = null;
         entry = null;
+        titleJournal();
+        moodJournal();
         writeJournal();
 
     }
 
-    private void writeJournal() {
-        System.out.println("Date:" + date);
-        System.out.println("Please decide the Journal title, for easy future search");
+    private void titleJournal() {
         title = words.nextLine();
+    }
+
+    private void moodJournal() {
+        do {
+            moodQuestion();
+            mood = words.nextInt();
+        } while ((mood > 10 || mood < 1));
+    }
+
+    private void writeJournal() {
+
         do {
             System.out.println("Please rate your mood on a scale of 1-10 (10 being amazing!)");
             mood = words.nextInt();
@@ -55,8 +67,9 @@ public class JournalEntry {
         return this.title;
     }
 
-    public String getEntry() {
-        System.out.println(entry);
-        return this.entry;
+    public void getEntry() {
+        System.out.println("Date " + this.date);
+        System.out.println("Mood was: " + this.mood);
+        System.out.println("Text is: " + this.entry);
     }
 }

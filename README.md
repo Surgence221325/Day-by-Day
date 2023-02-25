@@ -35,4 +35,6 @@ Via **consistent** use, our users will achieve long term mental stability.
 - As a user, I want to track my mental health over a period of time by rating it on a scale daily. 
 - As a user, I want to view my journal entries, and refer back to them in the future.
 - As a user, I want to customize my journal entries using stickers and drawings.
+- As a user, I want to create different types of journals, some that are prompted.
+  - new (#4 is not effective without gui, will implement in phase 2)
 

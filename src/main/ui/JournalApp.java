@@ -5,10 +5,7 @@ import model.JournalEntry;
 import model.Journal.*;
 import model.JournalEntry.*;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
 
 // Journaling app with capabilities to create new entries, save and search entries based on date/mood.
 public class JournalApp {
@@ -77,9 +74,13 @@ public class JournalApp {
 
     // how to create new journal each time?
     private void newEntry() {
+        Date x = new Date();
+        System.out.println("Date:" + x);
+        System.out.println("Please decide the Journal title, for easy future search");
         journal.addEntry(new JournalEntry());
         System.out.print(journal.getNames());
     }
+
 
     private void searchEntry() {
         System.out.println("\nSearch by:");
@@ -121,6 +122,10 @@ public class JournalApp {
             }
         }
         System.out.println(desiredMood.getNames());
+        System.out.println("Please select one of the above journals, the first journal on the left is entried #1"
+                + " each journal there after has number +1 the previous");
+        int selected = input.nextInt();
+        getEntry1(selected, desiredMood);
 
     }
 
@@ -142,11 +147,13 @@ public class JournalApp {
         }
     }
 
-    private String getEntry1(int num, Journal desired) {
-        return desired.getJournalEntry(num).getEntry();
+    private void getEntry1(int num, Journal desired) {
+        desired.getJournalEntry(num).getEntry();
     }
 
+
     private void promptEntry() {
-        // stub
+        journal.addEntry(new JournalEntry());
+        System.out.print(journal.getNames());
     }
 }
