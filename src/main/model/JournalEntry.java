@@ -9,7 +9,7 @@ public class JournalEntry {
     private String title;
     private String entry;
 
-    //REQUIRES: mood be an integer input, date must be a date.
+    //REQUIRES: mood be an integer input, date must be a date, other entries must be standard strings.
     //EFFECTS: creates a new JournalEntry with date, title, mood, and entry.
     public JournalEntry(Date date, String title, int mood, String entry) {
         this.date = date;
