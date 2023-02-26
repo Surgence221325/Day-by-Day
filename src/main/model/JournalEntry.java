@@ -14,10 +14,9 @@ public class JournalEntry {
 
     //REQUIRES: mood be an integer input
     //EFFECTS: creates a new JournalEntry with title, mood, and entry.
-    public JournalEntry(String title, int mood, String entry) {
+    public JournalEntry(Date date, String title, int mood, String entry) {
         words = new Scanner(System.in);
-        date = new Date();
-        mood = 0;
+        this.date = date;
         this.title = title;
         this.mood = mood;
         this.entry = entry;
@@ -38,10 +37,14 @@ public class JournalEntry {
         return this.title;
     }
 
-    //EFFECTS: returns date, mood, and entry for a Journal entry.
-    public void getEntry() {
-        System.out.println("Date " + this.date);
-        System.out.println("Mood was: " + this.mood);
-        System.out.println("Text is: " + this.entry);
+
+
+    //EFFECTSL returns entry for a JournalEntry.
+    public String getEntry() {
+        return this.entry;
     }
+
+
+
+
 }

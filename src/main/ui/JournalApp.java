@@ -96,7 +96,7 @@ public class JournalApp {
         }
         System.out.println("Begin Entry, type /F to finish.");
         String entry = input.useDelimiter("/F").next();
-        journal.addEntry(new JournalEntry(title, mood, entry));
+        journal.addEntry(new JournalEntry(today, title, mood, entry));
         System.out.print(journal.getNames());
         input.nextLine();
     }
@@ -122,6 +122,9 @@ public class JournalApp {
     }
 
     //EFFECTS: processes option for user, directing to proper method.
+    //NOTE: The length of this function is due to the long sout statements,
+    // I thought it would just be more confusing to split it up.
+    @SuppressWarnings("methodlength")
     private void processSearch(String searcher) {
         if (searcher.equals("M")) {
             System.out.println("what mood would you like to search for?");
@@ -242,10 +245,16 @@ public class JournalApp {
         System.out.println(journal.getNames());
     }
 
+    public void overall(JournalEntry j) {
+        System.out.println("The date was:" + j.getDate());
+        System.out.println("The mood was:" + j.getMood());
+        System.out.println("The entry was:" + j.getEntry());
+    }
+
     //REQUIRES: journal must have that entry number
     //EFFECTS: gets entry num from journal
     private void getEntry1(int num, Journal desired) {
-        desired.getJournalEntry(num).getEntry();
+        overall(desired.getJournalEntry(num));
     }
 
     //EFFECTS: Creates prompt journal entry and adds it to journal.
@@ -281,7 +290,7 @@ public class JournalApp {
         System.out.println("What is the first step you can take to decreasing that emotion? Type /F to finish.");
         entry = entry + "What is the first step you can take to decreasing that emotion? Type /F to finish."
                 + input.useDelimiter("/F").next();
-        journal.addEntry(new JournalEntry(title, mood, entry));
+        journal.addEntry(new JournalEntry(today, title, mood, entry));
         System.out.print(journal.getNames());
         input.nextLine();
     }
