@@ -1,6 +1,6 @@
 package model;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -9,19 +9,27 @@ public class Journal {
 
     //EFFECTS: creates a new Journal
     public Journal() {
+
         journals = new ArrayList<>();
     }
 
+    //REQUIRES: Unique journal entry (can't add the same object).
     //MODIFIES: this journal.
     //EFFECTS: adds journal entry to journal.
     public void addEntry(JournalEntry j) {
+
         journals.add(j);
     }
 
+    //REQUIRES: Journal entry to exist in journal.
+    //MODIFIES: this
+    //EFFECTS: removes journal entry from journal.
     public void removeEntry(JournalEntry j) {
+
         journals.remove(j);
     }
 
+    //EFFECTS: Creates a new journal, desiredTitle, that has all journal entries from original with title desired
     public Journal titleSearch(String desired) {
         Journal desiredTitle = new Journal();
         for (JournalEntry j: this.getJournals()) {
@@ -32,6 +40,7 @@ public class Journal {
         return desiredTitle;
     }
 
+    //EFFECTS: Creates a new journal, desiredMood, that has all journal entries with desired mood
     public Journal moodSearch(int desired) {
         Journal desiredMood = new Journal();
         for (JournalEntry j: this.getJournals()) {
