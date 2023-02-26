@@ -13,60 +13,34 @@ public class JournalEntry {
     private String title;
     private String entry;
 
-    public JournalEntry() {
+    //REQUIRES: mood be an integer input
+    //EFFECTS: creates a new JournalEntry with title, mood, and entry.
+    public JournalEntry(String title, int mood, String entry) {
         words = new Scanner(System.in);
         date = new Date();
         mood = 0;
         response = "";
-        title = null;
-        entry = null;
-        titleJournal();
-        moodJournal();
-        writeJournal();
-
+        this.title = title;
+        this.mood = mood;
+        this.entry = entry;
     }
 
-    private void titleJournal() {
-        title = words.nextLine();
-    }
-
-    private void moodJournal() {
-        do {
-            moodQuestion();
-            mood = words.nextInt();
-        } while ((mood > 10 || mood < 1));
-    }
-
-    private void writeJournal() {
-
-        do {
-            System.out.println("Please rate your mood on a scale of 1-10 (10 being amazing!)");
-            mood = words.nextInt();
-        } while ((mood > 10 || mood < 1));
-
-
-        if (mood <= 5) {
-            System.out.println("Although you may not be feeling great now, I hope you feel better after the "
-                    + "journaling session!");
-        } else {
-            System.out.println("Happy you are feeling great, I hope this journaling session makes it even better!");
-        }
-        System.out.println("Begin Entry");
-        entry = words.useDelimiter("Finish Entry").next();
-    }
-
+    //EFFECTS: returns mood for a journalentry.
     public int getMood() {
         return this.mood;
     }
 
+    //EFFECTS: returns date for a journalentry.
     public Date getDate() {
         return this.date;
     }
 
+    //EFFECTS: returns title for a journalentry.
     public String getTitle() {
         return this.title;
     }
 
+    //EFFECTS: returns date, mood, and entry for a Journal entry.
     public void getEntry() {
         System.out.println("Date " + this.date);
         System.out.println("Mood was: " + this.mood);

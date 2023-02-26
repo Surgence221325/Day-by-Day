@@ -20,16 +20,16 @@ public class JournalApp {
 
     private void startJournal() {
         boolean running = true;
-        String command =  null;
+        String command;
 
         init();
-        Scanner name = new Scanner(System.in);
         System.out.println("Enter UserName");
 
-        String userName = name.nextLine();
+        this.userName = input.next();
         System.out.println("Welcome " + userName);
 
         while (running) {
+            input.reset();
             displayOptions();
             command = input.next();
             command = command.toLowerCase();
@@ -57,7 +57,7 @@ public class JournalApp {
         } else if (command.equals("s")) {
             searchEntry();
         } else if (command.equals("p")) {
-            //promptEntry();
+            promptEntry();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -74,11 +74,27 @@ public class JournalApp {
 
     // how to create new journal each time?
     private void newEntry() {
-        Date x = new Date();
-        System.out.println("Date:" + x);
+        input.useDelimiter(System.lineSeparator());
+        Date today = new Date();
+        System.out.println("Date:" + today);
         System.out.println("Please decide the Journal title, for easy future search");
-        journal.addEntry(new JournalEntry());
+        String title = input.next();
+        int mood;
+        do {
+            System.out.println("Please rate your mood on a scale of 1-10 (10 being amazing!)");
+            mood = input.nextInt();
+        } while ((mood > 10 || mood < 1));
+        if (mood <= 5) {
+            System.out.println("Although you may not be feeling great now, I hope you feel better after the "
+                    + "journaling session!");
+        } else {
+            System.out.println("Happy you are feeling great, I hope this journaling session makes it even better!");
+        }
+        System.out.println("Begin Entry, type /F to finish.");
+        String entry = input.useDelimiter("/F").next();
+        journal.addEntry(new JournalEntry(title, mood, entry));
         System.out.print(journal.getNames());
+        input.nextLine();
     }
 
 
@@ -90,7 +106,6 @@ public class JournalApp {
         System.out.println("\tQ -> Quit");
         String searcher = input.next();
         processSearch(searcher);
-
     }
 
     private void processSearch(String searcher) {
@@ -153,7 +168,35 @@ public class JournalApp {
 
 
     private void promptEntry() {
-        journal.addEntry(new JournalEntry());
+        input.useDelimiter(System.lineSeparator());
+        Date today = new Date();
+        System.out.println("Date:" + today);
+        System.out.println("Please decide the Journal title, for easy future search");
+        String title = input.next();
+        int mood;
+        do {
+            System.out.println("Please rate your mood on a scale of 1-10 (10 being amazing!)");
+            mood = input.nextInt();
+        } while ((mood > 10 || mood < 1));
+        if (mood <= 5) {
+            System.out.println("Although you may not be feeling great now, I hope you feel better after the "
+                    + "journaling session!");
+        } else {
+            System.out.println("Happy you are feeling great, I hope this journaling session makes it even better!");
+        }
+        System.out.println("Describe your emotions using 3 key words.Type /F to finish.");
+        String entry = "Describe your emotions using 3 key words.Type /F to finish." + " "
+                + input.useDelimiter("/F").next();
+        System.out.println("Imagine you are walking up a hill, with these emotions as rocks in your backpack. "
+                + "Which emotion, when taken out will decrease your load the most. Type /F to finish.");
+        entry = entry + "Imagine you are walking up a hill, with these emotions as rocks in your backpack. "
+                + "Which emotion, when taken out will decrease your load the most. Type /F to finish."
+                + input.useDelimiter("/F").next();
+        System.out.println("What is the first step you can take to decreasing that emotion? Type /F to finish.");
+        entry = entry + "What is the first step you can take to decreasing that emotion? Type /F to finish."
+                + input.useDelimiter("/F").next();
+        journal.addEntry(new JournalEntry(title, mood, entry));
         System.out.print(journal.getNames());
+        input.nextLine();
     }
 }
