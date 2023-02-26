@@ -9,7 +9,6 @@ public class JournalEntry {
     private Scanner words;
     private Date date;
     private int mood;
-    private String response;
     private String title;
     private String entry;
 
@@ -19,7 +18,6 @@ public class JournalEntry {
         words = new Scanner(System.in);
         date = new Date();
         mood = 0;
-        response = "";
         this.title = title;
         this.mood = mood;
         this.entry = entry;

@@ -102,6 +102,7 @@ public class JournalApp {
         System.out.println("\nSearch by:");
         System.out.println("\tM -> Mood");
         System.out.println("\tT -> Title");
+        System.out.println("\tA -> All Journals");
         System.out.println("\tG -> Go Back");
         System.out.println("\tQ -> Quit");
         String searcher = input.next();
@@ -118,12 +119,23 @@ public class JournalApp {
             System.out.println("enter desired title");
             String desired = input.next();
             titleSearch(desired);
+        } else if (searcher.equals("A")) {
+            System.out.println(journal.getNames());
+            display(journal);
+            int wanted = input.nextInt();
+            getEntry1(wanted, journal);
         } else if (searcher.equals("G")) {
             displayOptions();
             String command = input.next();
             processCommand(command);
         } else {
             System.out.println("Selection not valid...");
+        }
+    }
+
+    private void display(Journal journal) {
+        for (int i = 1; i < (1 + journal.getSize()); i++) {
+            System.out.println("Option " + Integer.toString(i) + ": " + journal.getJournalEntry(i).getTitle());
         }
     }
 
@@ -136,12 +148,18 @@ public class JournalApp {
                 desiredMood.addEntry(j);
             }
         }
-        System.out.println(desiredMood.getNames());
-        System.out.println("Please select one of the above journals, the first journal on the left is entried #1"
-                + " each journal there after has number +1 the previous");
-        int selected = input.nextInt();
-        getEntry1(selected, desiredMood);
-
+        if (desiredMood.getSize() == 0) {
+            System.out.println("Sorry desired mood is not entered");
+        } else {
+            System.out.println(desiredMood.getNames());
+            for (int i = 1; i < (1 + desiredMood.getSize()); i++) {
+                System.out.println("Option " + Integer.toString(i) + ": " + desiredMood.getJournalEntry(i).getTitle());
+            }
+            System.out.println("Please select one of the above journals, the first journal on the left is entried #1"
+                    + " each journal there after has number +1 the previous");
+            int selected = input.nextInt();
+            getEntry1(selected, desiredMood);
+        }
     }
 
     private void titleSearch(String desired) {
@@ -155,7 +173,10 @@ public class JournalApp {
             System.out.println("Sorry desired journal does not exist, please watch spelling");
         } else {
             System.out.println(desiredTitle.getNames());
-            System.out.println("Please select one of the above journals, the first journal on the left is entried #1"
+            for (int i = 1; i < (1 + desiredTitle.getSize()); i++) {
+                System.out.println("Option " + Integer.toString(i) + ": " + desiredTitle.getJournalEntry(i).getTitle());
+            }
+            System.out.println("Please select one of the above journals, the first journal is entried #1"
                     + " each journal there after has number +1 the previous");
             int selected = input.nextInt();
             getEntry1(selected, desiredTitle);
