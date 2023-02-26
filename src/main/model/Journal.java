@@ -18,6 +18,10 @@ public class Journal {
         journals.add(j);
     }
 
+    public void removeEntry(JournalEntry j) {
+        journals.remove(j);
+    }
+
 
     //EFFECTS: returns size of journal.
     public int getSize() {

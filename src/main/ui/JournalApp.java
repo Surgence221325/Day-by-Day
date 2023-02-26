@@ -58,6 +58,8 @@ public class JournalApp {
             searchEntry();
         } else if (command.equals("p")) {
             promptEntry();
+        } else if (command.equals("r")) {
+            removeEntry();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -68,6 +70,7 @@ public class JournalApp {
         System.out.println("\nSelect from:");
         System.out.println("\tN -> New Basic Entry");
         System.out.println("\tS -> Search entries");
+        System.out.println("\tR -> Remove entries");
         System.out.println("\tP -> Prompted journaling");
         System.out.println("\tQ -> Quit");
     }
@@ -109,6 +112,15 @@ public class JournalApp {
         processSearch(searcher);
     }
 
+    private void removeEntry() {
+        System.out.println("\nRemove by:");
+        System.out.println("\tM -> Mood");
+        System.out.println("\tT -> Title");
+        System.out.println("\tG -> Go Back");
+        String destroyer = input.next().toUpperCase();
+        processDestroy(destroyer);
+    }
+
     //EFFECTS: processes option for user, directing to proper method.
     private void processSearch(String searcher) {
         if (searcher.equals("M")) {
@@ -130,6 +142,25 @@ public class JournalApp {
                 getEntry1(wanted, journal);
             }
         } else if (searcher.equals("G")) {
+            displayOptions();
+            String command = input.next();
+            processCommand(command);
+        } else {
+            System.out.println("Selection not valid...");
+        }
+    }
+
+    private void processDestroy(String destroyer) {
+        if (destroyer.equals("M")) {
+            System.out.println("what mood would you like to remove?");
+            int desired = Integer.parseInt(input.next());
+            moodDestroy(desired);
+        } else if (destroyer.equals("T")) {
+            System.out.println(journal.getNames());
+            System.out.println("enter desired title to remove");
+            String desired = input.next();
+            titleDestroy(desired);
+        } else if (destroyer.equals("G")) {
             displayOptions();
             String command = input.next();
             processCommand(command);
@@ -169,6 +200,16 @@ public class JournalApp {
         }
     }
 
+    private void moodDestroy(int desired) {
+        for (JournalEntry j: journal.getJournals()) {
+            if (j.getMood() == desired) {
+                journal.removeEntry(j);
+            }
+        }
+        System.out.println("finished removing mood: " + Integer.toString(desired));
+        System.out.println(journal.getNames());
+    }
+
     //EFFECTS: prints list of desired title entry.
     private void titleSearch(String desired) {
         Journal desiredTitle = new Journal();
@@ -189,6 +230,16 @@ public class JournalApp {
             int selected = input.nextInt();
             getEntry1(selected, desiredTitle);
         }
+    }
+
+    private void titleDestroy(String desired) {
+        for (JournalEntry j: journal.getJournals()) {
+            if (desired.equals(j.getTitle())) {
+                journal.removeEntry(j);
+            }
+        }
+        System.out.println("finished removing title: " + desired);
+        System.out.println(journal.getNames());
     }
 
     //REQUIRES: journal must have that entry number
