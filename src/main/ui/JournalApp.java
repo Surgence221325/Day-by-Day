@@ -166,7 +166,7 @@ public class JournalApp {
         desired.getJournalEntry(num).getEntry();
     }
 
-
+    @SuppressWarnings("methodlength")
     private void promptEntry() {
         input.useDelimiter(System.lineSeparator());
         Date today = new Date();
