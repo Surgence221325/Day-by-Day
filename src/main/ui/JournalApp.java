@@ -72,7 +72,8 @@ public class JournalApp {
         System.out.println("\tQ -> Quit");
     }
 
-    // how to create new journal each time?
+    // MODIFIES: this
+    // EFFECTS: Creates a new journal entry, and adds it to the journal.
     private void newEntry() {
         input.useDelimiter(System.lineSeparator());
         Date today = new Date();
@@ -97,18 +98,18 @@ public class JournalApp {
         input.nextLine();
     }
 
-
+    // EFFECTS: displays options for user.
     private void searchEntry() {
         System.out.println("\nSearch by:");
         System.out.println("\tM -> Mood");
         System.out.println("\tT -> Title");
         System.out.println("\tA -> All Journals");
         System.out.println("\tG -> Go Back");
-        System.out.println("\tQ -> Quit");
-        String searcher = input.next();
+        String searcher = input.next().toUpperCase();
         processSearch(searcher);
     }
 
+    //EFFECTS: processes option for user, directing to proper method.
     private void processSearch(String searcher) {
         if (searcher.equals("M")) {
             System.out.println("what mood would you like to search for?");
@@ -121,9 +122,13 @@ public class JournalApp {
             titleSearch(desired);
         } else if (searcher.equals("A")) {
             System.out.println(journal.getNames());
-            display(journal);
-            int wanted = input.nextInt();
-            getEntry1(wanted, journal);
+            if (journal.getSize() == 0) {
+                System.out.println("journal is empty");
+            } else {
+                display(journal);
+                int wanted = input.nextInt();
+                getEntry1(wanted, journal);
+            }
         } else if (searcher.equals("G")) {
             displayOptions();
             String command = input.next();
@@ -133,14 +138,16 @@ public class JournalApp {
         }
     }
 
+    //EFFECTS: Displays journal as easily digestiable option menu for user.
     private void display(Journal journal) {
         for (int i = 1; i < (1 + journal.getSize()); i++) {
             System.out.println("Option " + Integer.toString(i) + ": " + journal.getJournalEntry(i).getTitle());
+
         }
     }
 
 
-
+    //EFFECTS: Displays list of desired mood based entries.
     private void moodSearch(int desired) {
         Journal desiredMood = new Journal();
         for (JournalEntry j: journal.getJournals()) {
@@ -162,6 +169,7 @@ public class JournalApp {
         }
     }
 
+    //EFFECTS: prints list of desired title entry.
     private void titleSearch(String desired) {
         Journal desiredTitle = new Journal();
         for (JournalEntry j: journal.getJournals()) {
@@ -183,10 +191,16 @@ public class JournalApp {
         }
     }
 
+    //REQUIRES: journal must have that entry number
+    //EFFECTS: gets entry num from journal
     private void getEntry1(int num, Journal desired) {
         desired.getJournalEntry(num).getEntry();
     }
 
+    //EFFECTS: Creates prompt journal entry and adds it to journal.
+    //MODIFIES: this
+    //NOTE: The length of this function is due to the long sout statements,
+    // I thought it would just be more confusing to split it up.
     @SuppressWarnings("methodlength")
     private void promptEntry() {
         input.useDelimiter(System.lineSeparator());
