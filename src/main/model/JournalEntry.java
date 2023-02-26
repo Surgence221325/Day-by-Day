@@ -37,9 +37,7 @@ public class JournalEntry {
         return this.title;
     }
 
-
-
-    //EFFECTSL returns entry for a JournalEntry.
+    //EFFECTS: returns entry for a JournalEntry.
     public String getEntry() {
         return this.entry;
     }

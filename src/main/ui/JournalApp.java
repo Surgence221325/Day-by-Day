@@ -129,12 +129,12 @@ public class JournalApp {
         if (searcher.equals("M")) {
             System.out.println("what mood would you like to search for?");
             int desired = Integer.parseInt(input.next());
-            moodSearch(desired);
+            moodSearchDisplay(journal.moodSearch(desired));
         } else if (searcher.equals("T")) {
             System.out.println(journal.getNames());
             System.out.println("enter desired title");
             String desired = input.next();
-            titleSearch(desired);
+            titleSearchDisplay(journal.titleSearch(desired));
         } else if (searcher.equals("A")) {
             System.out.println(journal.getNames());
             if (journal.getSize() == 0) {
@@ -142,7 +142,7 @@ public class JournalApp {
             } else {
                 display(journal);
                 int wanted = input.nextInt();
-                getEntry1(wanted, journal);
+                overall(journal.getJournalEntry(wanted));
             }
         } else if (searcher.equals("G")) {
             displayOptions();
@@ -157,12 +157,16 @@ public class JournalApp {
         if (destroyer.equals("M")) {
             System.out.println("what mood would you like to remove?");
             int desired = Integer.parseInt(input.next());
-            moodDestroy(desired);
+            moodDestroyDisplay(journal.moodSearch(desired));
+            System.out.println("finished removing mood: " + Integer.toString(desired));
+            System.out.println(journal.getNames());
         } else if (destroyer.equals("T")) {
             System.out.println(journal.getNames());
             System.out.println("enter desired title to remove");
             String desired = input.next();
-            titleDestroy(desired);
+            titleDestroyDisplay(journal.titleSearch(desired));
+            System.out.println("finished removing title: " + desired);
+            System.out.println(journal.getNames());
         } else if (destroyer.equals("G")) {
             displayOptions();
             String command = input.next();
@@ -172,89 +176,76 @@ public class JournalApp {
         }
     }
 
-    //EFFECTS: Displays journal as easily digestiable option menu for user.
-    private void display(Journal journal) {
-        for (int i = 1; i < (1 + journal.getSize()); i++) {
-            System.out.println("Option " + Integer.toString(i) + ": " + journal.getJournalEntry(i).getTitle());
-
-        }
-    }
-
-
-    //EFFECTS: Displays list of desired mood based entries.
-    private void moodSearch(int desired) {
-        Journal desiredMood = new Journal();
-        for (JournalEntry j: journal.getJournals()) {
-            if (j.getMood() == desired) {
-                desiredMood.addEntry(j);
-            }
-        }
+    private void moodDestroyDisplay(Journal desiredMood) {
         if (desiredMood.getSize() == 0) {
             System.out.println("Sorry desired mood is not entered");
         } else {
             System.out.println(desiredMood.getNames());
-            for (int i = 1; i < (1 + desiredMood.getSize()); i++) {
-                System.out.println("Option " + Integer.toString(i) + ": " + desiredMood.getJournalEntry(i).getTitle());
-            }
+            display(desiredMood);
             System.out.println("Please select one of the above journals, the first journal on the left is entried #1"
                     + " each journal there after has number +1 the previous");
             int selected = input.nextInt();
-            getEntry1(selected, desiredMood);
+            journal.removeEntry(desiredMood.getJournalEntry(selected));
         }
     }
 
-    private void moodDestroy(int desired) {
-        for (JournalEntry j: journal.getJournals()) {
-            if (j.getMood() == desired) {
-                journal.removeEntry(j);
-            }
+    //EFFECTS: Displays journal as easily digestiable option menu for user.
+    private void display(Journal journal) {
+        for (int i = 1; i < (1 + journal.getSize()); i++) {
+            System.out.println("Option " + Integer.toString(i) + ": " + journal.getJournalEntry(i).getTitle());
         }
-        System.out.println("finished removing mood: " + Integer.toString(desired));
-        System.out.println(journal.getNames());
+    }
+
+
+
+
+    //EFFECTS: Displays list of desired mood based entries.
+    private void moodSearchDisplay(Journal desiredMood) {
+        if (desiredMood.getSize() == 0) {
+            System.out.println("Sorry desired mood is not entered");
+        } else {
+            System.out.println(desiredMood.getNames());
+            display(desiredMood);
+            System.out.println("Please select one of the above journals, the first journal on the left is entried #1"
+                    + " each journal there after has number +1 the previous");
+            int selected = input.nextInt();
+            overall(desiredMood.getJournalEntry(selected));
+        }
     }
 
     //EFFECTS: prints list of desired title entry.
-    private void titleSearch(String desired) {
-        Journal desiredTitle = new Journal();
-        for (JournalEntry j: journal.getJournals()) {
-            if (desired.equals(j.getTitle())) {
-                desiredTitle.addEntry(j);
-            }
-        }
+    private void titleSearchDisplay(Journal desiredTitle) {
         if (desiredTitle.getSize() == 0) {
             System.out.println("Sorry desired journal does not exist, please watch spelling");
         } else {
             System.out.println(desiredTitle.getNames());
-            for (int i = 1; i < (1 + desiredTitle.getSize()); i++) {
-                System.out.println("Option " + Integer.toString(i) + ": " + desiredTitle.getJournalEntry(i).getTitle());
-            }
+            display(desiredTitle);
             System.out.println("Please select one of the above journals, the first journal is entried #1"
                     + " each journal there after has number +1 the previous");
             int selected = input.nextInt();
-            getEntry1(selected, desiredTitle);
+            overall(desiredTitle.getJournalEntry(selected));
         }
     }
 
-    private void titleDestroy(String desired) {
-        for (JournalEntry j: journal.getJournals()) {
-            if (desired.equals(j.getTitle())) {
-                journal.removeEntry(j);
-            }
+    //EFFECTS: prints list of desired title entry.
+    private void titleDestroyDisplay(Journal desiredTitle) {
+        if (desiredTitle.getSize() == 0) {
+            System.out.println("Sorry desired journal does not exist, please watch spelling");
+        } else {
+            System.out.println(desiredTitle.getNames());
+            display(desiredTitle);
+            System.out.println("Please select one of the above journals, the first journal is entried #1"
+                    + " each journal there after has number +1 the previous");
+            int selected = input.nextInt();
+            journal.removeEntry(desiredTitle.getJournalEntry(selected));
         }
-        System.out.println("finished removing title: " + desired);
-        System.out.println(journal.getNames());
     }
 
+    //EFFECTS: prints date, mood, and entry of a JournalEntry
     public void overall(JournalEntry j) {
         System.out.println("The date was:" + j.getDate());
         System.out.println("The mood was:" + j.getMood());
         System.out.println("The entry was:" + j.getEntry());
-    }
-
-    //REQUIRES: journal must have that entry number
-    //EFFECTS: gets entry num from journal
-    private void getEntry1(int num, Journal desired) {
-        overall(desired.getJournalEntry(num));
     }
 
     //EFFECTS: Creates prompt journal entry and adds it to journal.

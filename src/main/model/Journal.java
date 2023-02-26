@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Journal {
-    private LinkedList<JournalEntry> journals;
+    private ArrayList<JournalEntry> journals;
 
     //EFFECTS: creates a new Journal
     public Journal() {
-        journals = new LinkedList<>();
+        journals = new ArrayList<>();
     }
 
     //MODIFIES: this journal.
@@ -20,6 +20,26 @@ public class Journal {
 
     public void removeEntry(JournalEntry j) {
         journals.remove(j);
+    }
+
+    public Journal titleSearch(String desired) {
+        Journal desiredTitle = new Journal();
+        for (JournalEntry j: this.getJournals()) {
+            if (desired.equals(j.getTitle())) {
+                desiredTitle.addEntry(j);
+            }
+        }
+        return desiredTitle;
+    }
+
+    public Journal moodSearch(int desired) {
+        Journal desiredMood = new Journal();
+        for (JournalEntry j: this.getJournals()) {
+            if (j.getMood() == desired) {
+                desiredMood.addEntry(j);
+            }
+        }
+        return desiredMood;
     }
 
 
@@ -38,7 +58,7 @@ public class Journal {
     }
 
     //EFFECTS: returns journal.
-    public LinkedList<JournalEntry> getJournals() {
+    public ArrayList<JournalEntry> getJournals() {
         return journals;
     }
 
