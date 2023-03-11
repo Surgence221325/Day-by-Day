@@ -3,9 +3,9 @@ package model;
 
 import org.json.JSONObject;
 
-import java.util.Date;
 import java.time.*;
 
+//A journalentry created with date, title, mood, and entry.
 public class JournalEntry {
     private String date;
     private String title;
@@ -21,12 +21,6 @@ public class JournalEntry {
         this.entry = entry;
     }
 
-    public JournalEntry(String date, String title, int mood, String entry) {
-        this.date = date;
-        this.title = title;
-        this.mood = mood;
-        this.entry = entry;
-    }
 
     //EFFECTS: returns mood for a journalentry.
     public int getMood() {
@@ -48,6 +42,7 @@ public class JournalEntry {
         return this.entry;
     }
 
+    //Returns journalentry as jsonobject.
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("date", date);

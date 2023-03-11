@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.stream.Stream;
 
 import model.Journal;
@@ -41,13 +40,14 @@ public class JsonReader {
     // EFFECTS: parses journal from JSON object and returns it
     private Journal parseJournal(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        Journal j = new Journal(name);
+        String password = jsonObject.getString("password");
+        Journal j = new Journal(name, password);
         addJournals(j, jsonObject);
         return j;
     }
 
     // MODIFIES: journal
-    // EFFECTS: parses journal (field) from JSON object and adds them to workroom
+    // EFFECTS: parses journal (field) from JSON object and entries to journal
     private void addJournals(Journal j, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("journals");
         for (Object json : jsonArray) {

@@ -7,18 +7,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+// Consists of a journal name, password, and series of journal entries.
 public class Journal {
     private String name;
+    private String password;
     private ArrayList<JournalEntry> journals;
 
-    //EFFECTS: creates a new Journal
-    public Journal(String name) {
+    //EFFECTS: creates a new Journal with name and password.
+    public Journal(String name, String password) {
         this.name = name;
+        this.password = password;
         journals = new ArrayList<>();
     }
 
+    //EFFECTS: creates a new journal entry with blank fields.
     public Journal() {
         this.name = "";
+        this.password = "";
         journals = new ArrayList<>();
     }
 
@@ -87,14 +92,18 @@ public class Journal {
     }
 
 
+    //returns journal as jsonobject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
-        json.put("journals", journals);
+        json.put("journals", journalEntriesToJson());
+        json.put("password", password);
         return json;
     }
 
-    private JSONArray thingiesToJson() {
+
+    //returns journals as jsonarray
+    private JSONArray journalEntriesToJson() {
         JSONArray jsonArray = new JSONArray();
         for (JournalEntry j : journals) {
             jsonArray.put(j.toJson());
@@ -104,6 +113,10 @@ public class Journal {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 }
 

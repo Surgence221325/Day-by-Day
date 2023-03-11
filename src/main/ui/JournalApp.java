@@ -2,8 +2,6 @@ package ui;
 
 import model.Journal;
 import model.JournalEntry;
-import model.Journal.*;
-import model.JournalEntry.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -14,24 +12,28 @@ import java.util.*;
 
 // Journaling app with capabilities to create new entries, save and search entries based on date/mood.
 public class JournalApp {
-    private static final String JSON_STORE = "./data/workroom.json";
+    private static final String JSON_STORE = "./data/myFile.json";
     private Journal journal;
     private Scanner input;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    //runs startJournal
+    //runs StartJournal and initializes journal, scanner, and JSON.
     public JournalApp() throws FileNotFoundException {
         input = new Scanner(System.in);
         System.out.println("Enter UserName");
         String userName = input.nextLine();
         System.out.println("Welcome " + userName);
-        journal = new Journal(userName);
+        System.out.println("Enter password");
+        String password = input.nextLine();
+        System.out.println("Password is: " + password);
+        journal = new Journal(userName, password);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         startJournal();
     }
 
+    //startsJournal, all states return here.
     private void startJournal() {
         boolean running = true;
         String command;
@@ -50,10 +52,6 @@ public class JournalApp {
         }
 
         System.out.println("See you Tomorrow!");
-    }
-
-    private void init() {
-
     }
 
     // MODIFIES: this
@@ -136,6 +134,8 @@ public class JournalApp {
         processDestroy(destroyer);
     }
 
+    //MODIFIES: JSON
+    //EFFECTS: Writes current data of journal to JSON.
     private void saveJournal() {
         try {
             jsonWriter.open();
@@ -148,13 +148,27 @@ public class JournalApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads journal from file, only if password is correct
     private void loadJournal() {
         try {
             journal = jsonReader.read();
             System.out.println("Loaded " + journal.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+        System.out.println("What is the password to " + journal.getName());
+        input.nextLine();
+        String determinant = input.nextLine();
+        if (determinant.equals(journal.getPassword())) {
+            System.out.println("Password correct, welcome back!");
+            return;
+        } else {
+            System.out.println("password incorrect, returning to main menu");
+            try {
+                new JournalApp();
+            } catch (FileNotFoundException e) {
+                System.out.println("Unable to run application: file not found");
+            }
         }
     }
 

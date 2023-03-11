@@ -2,6 +2,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,6 +16,8 @@ class JournalEntryTest {
 
     @Test
     public void journalEntryTest() {
+        String test = LocalDate.now().toString();
+        assertEquals(test, J1.getDate());
         assertEquals("test", J1.getTitle());
         assertEquals(1, J1.getMood());
         assertEquals("hello", J1.getEntry());
