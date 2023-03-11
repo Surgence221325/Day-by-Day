@@ -1,15 +1,24 @@
 package model;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Journal {
+    private String name;
     private ArrayList<JournalEntry> journals;
 
     //EFFECTS: creates a new Journal
-    public Journal() {
+    public Journal(String name) {
+        this.name = name;
+        journals = new ArrayList<>();
+    }
 
+    public Journal() {
+        this.name = "";
         journals = new ArrayList<>();
     }
 
@@ -76,4 +85,26 @@ public class Journal {
     public JournalEntry getJournalEntry(int num) {
         return journals.get((num - 1));
     }
+
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("journals", journals);
+        return json;
+    }
+
+    private JSONArray thingiesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (JournalEntry j : journals) {
+            jsonArray.put(j.toJson());
+        }
+        return jsonArray;
+    }
+
+    public String getName() {
+        return this.name;
+    }
 }
+
+

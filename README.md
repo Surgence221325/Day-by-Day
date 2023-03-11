@@ -37,4 +37,7 @@ Via **consistent** use, our users will achieve long term mental stability.
 - As a user, I want to customize my journal entries using stickers and drawings.
 - As a user, I want to create different types of journals, some that are prompted.
   - new (#4 is not effective without gui, will implement in phase 2)
+- As a user, I want to be able to save my journal entries (if I choose to).
+- As a user, I want to be able to load my journal entries (if I choose to).
+- As a user, I want to make sure my journal entries can only be accessed via password.
 

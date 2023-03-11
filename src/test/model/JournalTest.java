@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JournalTest {
     Date x = new Date();
-    JournalEntry J1 = new JournalEntry(x ,"test", 1, "hello");
-    JournalEntry J2 = new JournalEntry(x, "test2", 10, "bye");
-    JournalEntry J1x = new JournalEntry(x ,"test", 1, "hello");
-    JournalEntry J2x = new JournalEntry(x, "test2", 10, "bye");
-    Journal journal = new Journal();
+    JournalEntry J1 = new JournalEntry("test", 1, "hello");
+    JournalEntry J2 = new JournalEntry( "test2", 10, "bye");
+    JournalEntry J1x = new JournalEntry("test", 1, "hello");
+    JournalEntry J2x = new JournalEntry( "test2", 10, "bye");
+    Journal journal = new Journal("Test");
 
 
     @Test

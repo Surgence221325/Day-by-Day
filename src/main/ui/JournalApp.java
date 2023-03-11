@@ -4,29 +4,37 @@ import model.Journal;
 import model.JournalEntry;
 import model.Journal.*;
 import model.JournalEntry.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 // Journaling app with capabilities to create new entries, save and search entries based on date/mood.
 public class JournalApp {
+    private static final String JSON_STORE = "./data/workroom.json";
     private Journal journal;
     private Scanner input;
-    private String userName;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //runs startJournal
-    public JournalApp() {
+    public JournalApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        System.out.println("Enter UserName");
+        String userName = input.nextLine();
+        System.out.println("Welcome " + userName);
+        journal = new Journal(userName);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         startJournal();
     }
 
     private void startJournal() {
         boolean running = true;
         String command;
-
-        init();
-        System.out.println("Enter UserName");
-
-        this.userName = input.nextLine();
-        System.out.println("Welcome " + userName);
 
         while (running) {
             input.reset();
@@ -45,8 +53,7 @@ public class JournalApp {
     }
 
     private void init() {
-        journal = new Journal();
-        input = new Scanner(System.in);
+
     }
 
     // MODIFIES: this
@@ -60,6 +67,10 @@ public class JournalApp {
             promptEntry();
         } else if (command.equals("r")) {
             removeEntry();
+        } else if (command.equals("f")) {
+            saveJournal();
+        } else if (command.equals("l")) {
+            loadJournal();
         } else if (command.equals("q")) {
             return;
         } else {
@@ -74,6 +85,8 @@ public class JournalApp {
         System.out.println("\tS -> Search entries");
         System.out.println("\tR -> Remove entries");
         System.out.println("\tP -> Prompted journaling");
+        System.out.println("\tF -> Save File");
+        System.out.println("\tL -> Load File");
         System.out.println("\tQ -> Quit");
     }
 
@@ -81,8 +94,7 @@ public class JournalApp {
     // EFFECTS: Creates a new journal entry, and adds it to the journal.
     private void newEntry() {
         input.useDelimiter(System.lineSeparator());
-        Date today = new Date();
-        System.out.println("Date:" + today);
+        System.out.println("Date:" + LocalDate.now());
         System.out.println("Please decide the Journal title, for easy future search");
         String title = input.next();
         int mood;
@@ -98,7 +110,7 @@ public class JournalApp {
         }
         System.out.println("Begin Entry, type /F to finish.");
         String entry = input.useDelimiter("/F").next();
-        journal.addEntry(new JournalEntry(today, title, mood, entry));
+        journal.addEntry(new JournalEntry(title, mood, entry));
         System.out.print(journal.getNames());
         input.nextLine();
     }
@@ -122,6 +134,28 @@ public class JournalApp {
         System.out.println("\tG -> Go Back");
         String destroyer = input.next().toUpperCase();
         processDestroy(destroyer);
+    }
+
+    private void saveJournal() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(journal);
+            jsonWriter.close();
+            System.out.println("Saved " + journal.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadJournal() {
+        try {
+            journal = jsonReader.read();
+            System.out.println("Loaded " + journal.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
     //EFFECTS: processes option for user, directing to proper method.
@@ -286,7 +320,7 @@ public class JournalApp {
         System.out.println("What is the first step you can take to decreasing that emotion? Type /F to finish.");
         entry = entry + "What is the first step you can take to decreasing that emotion? Type /F to finish."
                 + input.useDelimiter("/F").next();
-        journal.addEntry(new JournalEntry(today, title, mood, entry));
+        journal.addEntry(new JournalEntry(title, mood, entry));
         System.out.print(journal.getNames());
         input.nextLine();
     }

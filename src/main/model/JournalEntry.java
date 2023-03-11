@@ -1,17 +1,27 @@
 package model;
 
 
+import org.json.JSONObject;
+
 import java.util.Date;
+import java.time.*;
 
 public class JournalEntry {
-    private Date date;
-    private int mood;
+    private String date;
     private String title;
+    private int mood;
     private String entry;
 
     //REQUIRES: mood be an integer input, date must be a date, other entries must be standard strings.
     //EFFECTS: creates a new JournalEntry with date, title, mood, and entry.
-    public JournalEntry(Date date, String title, int mood, String entry) {
+    public JournalEntry(String title, int mood, String entry) {
+        this.date = LocalDate.now().toString();
+        this.title = title;
+        this.mood = mood;
+        this.entry = entry;
+    }
+
+    public JournalEntry(String date, String title, int mood, String entry) {
         this.date = date;
         this.title = title;
         this.mood = mood;
@@ -24,7 +34,7 @@ public class JournalEntry {
     }
 
     //EFFECTS: returns date for a journalentry.
-    public Date getDate() {
+    public String getDate() {
         return this.date;
     }
 
@@ -38,6 +48,14 @@ public class JournalEntry {
         return this.entry;
     }
 
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("date", date);
+        json.put("title", title);
+        json.put("mood", mood);
+        json.put("entry", entry);
+        return json;
+    }
 
 
 
