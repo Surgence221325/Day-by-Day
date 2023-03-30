@@ -61,28 +61,31 @@ public class GUI extends JFrame implements ActionListener {
     //MODIFIES: this
     //EFFECTS: setup for mainPanel
     private void mainPanelSetUp() {
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
-        mainPanel.setLayout(new GridLayout(0, 1));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
+        mainPanel.setLayout(new BorderLayout());
+
+        mainPanel.setBackground(new Color(180, 144, 250));
 
         createButton();
 
 
+        JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
+        buttonPanel.add(newEntryButton);
+        buttonPanel.add(newPromptEntryButton);
+        buttonPanel.add(removeButton);
+        buttonPanel.add(searchButton);
+        buttonPanel.add(saveButton);
+        buttonPanel.add(loadButton);
 
-        JLabel label = new JLabel("Take care of the day to day, day by day!");
-        //ImageIcon imageIcon = new ImageIcon("path/to/image.jpg");
-        //JLabel imageLabel = new JLabel(imageIcon);
-        //mainPanel.add(imageLabel);
-        mainPanel.add(label);
+
+        JScrollPane scrollPane = new JScrollPane(buttonPanel);
 
 
-
-
-        mainPanel.add(newEntryButton);
-        mainPanel.add(newPromptEntryButton);
-        mainPanel.add(removeButton);
-        mainPanel.add(searchButton);
-        mainPanel.add(saveButton);
-        mainPanel.add(loadButton);
+        ImageIcon imageIcon = new ImageIcon("./data/image2.png");
+        JLabel imageLabel = new JLabel(imageIcon);
+        imageLabel.setPreferredSize(new Dimension(500, 900));
+        mainPanel.add(imageLabel, BorderLayout.CENTER);
+        mainPanel.add(scrollPane, BorderLayout.LINE_END);
 
     }
 
@@ -93,6 +96,7 @@ public class GUI extends JFrame implements ActionListener {
 
         newEntryPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         newEntryPanel.setLayout(new GridLayout(0, 1));
+        newEntryPanel.setBackground(new Color(180, 144, 250));
         newEntryPanel.add(new JLabel("Enter Title:"));
         JTextField title = new JTextField();
         newEntryPanel.add(title);
@@ -126,6 +130,7 @@ public class GUI extends JFrame implements ActionListener {
 
         searchPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         searchPanel.setLayout(new GridLayout(0, 1));
+        searchPanel.setBackground(new Color(180, 144, 250));
         searchPanel.add(new JLabel("Search by:"));
 
 
@@ -196,6 +201,7 @@ public class GUI extends JFrame implements ActionListener {
 
         removePanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         removePanel.setLayout(new GridLayout(0, 1));
+        removePanel.setBackground(new Color(180, 144, 250));
         removePanel.add(new JLabel("Remove by:"));
 
 
@@ -245,6 +251,7 @@ public class GUI extends JFrame implements ActionListener {
     private void titleSearchSetUp(JPanel titleSearch) {
         titleSearch.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         titleSearch.setLayout(new GridLayout(0, 1));
+        titleSearch.setBackground(new Color(180, 144, 250));
 
         titleSearch.add(new JLabel("Input Title"));
         JTextField title = new JTextField();
@@ -271,6 +278,7 @@ public class GUI extends JFrame implements ActionListener {
     private void moodSearchSetUp(JPanel moodSearch) {
         moodSearch.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         moodSearch.setLayout(new GridLayout(0, 1));
+        moodSearch.setBackground(new Color(180, 144, 250));
 
         moodSearch.add(new JLabel("Input Mood (1-10)"));
         JTextField mood = new JTextField();
@@ -296,6 +304,7 @@ public class GUI extends JFrame implements ActionListener {
     private void allSearchSetUp(JPanel allSearch) {
         allSearch.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         allSearch.setLayout(new GridLayout(0, 1));
+        allSearch.setBackground(new Color(180, 144, 250));
         JTextArea entry = new JTextArea();
         allSearch.add(entry);
 
@@ -324,6 +333,7 @@ public class GUI extends JFrame implements ActionListener {
     private void titleRemoveSetUp(JPanel titleRemove) {
         titleRemove.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         titleRemove.setLayout(new GridLayout(0, 1));
+        titleRemove.setBackground(new Color(180, 144, 250));
 
         titleRemove.add(new JLabel("Input Title for removal"));
         JTextField title = new JTextField();
@@ -349,6 +359,7 @@ public class GUI extends JFrame implements ActionListener {
     private void moodRemoveSetUp(JPanel moodRemove) {
         moodRemove.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         moodRemove.setLayout(new GridLayout(0, 1));
+        moodRemove.setBackground(new Color(180, 144, 250));
 
         moodRemove.add(new JLabel("Input Mood (1-10) for removal"));
         JTextField mood = new JTextField();
@@ -375,6 +386,7 @@ public class GUI extends JFrame implements ActionListener {
     private void displaySetUp(JPanel displayPanel, Journal desired, String title) {
         displayPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         displayPanel.setLayout(new GridLayout(0, 1));
+        displayPanel.setBackground(new Color(180, 144, 250));
         JLabel t = new JLabel("Searching for:  " + title);
         JTextArea entry = new JTextArea();
         displayPanel.add(t);
@@ -402,6 +414,7 @@ public class GUI extends JFrame implements ActionListener {
     private void displayPanelRemoveSetUp(JPanel displayPanel, Journal desired, String title) {
         displayPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         displayPanel.setLayout(new GridLayout(0, 1));
+        displayPanel.setBackground(new Color(180, 144, 250));
         JLabel t = new JLabel("Searching for:  " + title);
         JTextArea entry = new JTextArea();
         displayPanel.add(t);
@@ -474,6 +487,13 @@ public class GUI extends JFrame implements ActionListener {
 
         loadButton = new JButton("Load Journal");
         loadButton.addActionListener(this);
+
+        newEntryButton.setPreferredSize(new Dimension(100, 30));
+        newPromptEntryButton.setPreferredSize(new Dimension(100, 30));
+        removeButton.setPreferredSize(new Dimension(100, 30));
+        searchButton.setPreferredSize(new Dimension(100, 30));
+        saveButton.setPreferredSize(new Dimension(100, 30));
+        loadButton.setPreferredSize(new Dimension(100, 30));
 
     }
 
