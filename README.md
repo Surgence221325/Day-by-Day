@@ -41,3 +41,23 @@ Via **consistent** use, our users will achieve long term mental stability.
 - As a user, I want to be able to load my journal entries (if I choose to).
 - As a user, I want to make sure my journal entries can only be accessed via password.
 
+
+*Instructions for Grader*
+
+how to generate the first of the two required actions that are related to the required user story 
+- click on New Entry to add an entry to the journal, then submit
+- you can view all the entries by clicking search entry and then all
+
+how to generate the second of the two required actions
+
+- you can filter these using Search Entry by either title or mood, or remove using Remove Entry 
+  - title/mood and selection.
+- 
+where to find the visual component that was added to your project (e.g., background image, image added to button)
+- background image found in ./data package
+
+how does the user save the state of the application to file
+- click save
+
+how does the user load the state of the application from file
+- click load
