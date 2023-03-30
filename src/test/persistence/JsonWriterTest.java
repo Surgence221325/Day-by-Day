@@ -5,6 +5,7 @@ import model.JournalEntry;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +60,9 @@ public class JsonWriterTest extends JsonTester {
             assertEquals("Test", j.getName());
             ArrayList<JournalEntry> journals = j.getJournals();
             assertEquals(2, journals.size());
-            checkEntry("2023-03-11", "Test1", 1, "\nHello", journals.get(0));
-            checkEntry("2023-03-11", "Test2", 10, "\nHello hi", journals.get(1));
+            String date = LocalDate.now().toString();
+            checkEntry(date, "Test1", 1, "\nHello", journals.get(0));
+            checkEntry(date, "Test2", 10, "\nHello hi", journals.get(1));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

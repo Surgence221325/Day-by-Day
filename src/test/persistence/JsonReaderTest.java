@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,8 +45,9 @@ public class JsonReaderTest extends JsonTester{
             assertEquals("123", j.getPassword());
             ArrayList<JournalEntry> journals = j.getJournals();
             assertEquals(2, journals.size());
-            checkEntry("2023-03-11", "Test", 1, "\nHello", journals.get(0));
-            checkEntry("2023-03-11", "Test2", 10, "\nHello hi", journals.get(1));
+            String date = LocalDate.now().toString();
+            checkEntry(date, "Test", 1, "\nHello", journals.get(0));
+            checkEntry(date, "Test2", 10, "\nHello hi", journals.get(1));
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

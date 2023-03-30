@@ -103,4 +103,5 @@ class JournalTest {
         assertEquals("test2", journal.getNames().get(2));
     }
 
+
 }
