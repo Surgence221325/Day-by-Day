@@ -1,5 +1,6 @@
 package ui;
 
+import model.EventLog;
 import model.Journal;
 import model.JournalEntry;
 import persistence.JsonReader;
@@ -9,8 +10,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -46,6 +50,7 @@ public class GUI extends JFrame implements ActionListener {
 
 
         mainPanelSetUp();
+        mainPanelOnClose();
 
         cards.add(mainPanel, "Home");
 
@@ -55,6 +60,20 @@ public class GUI extends JFrame implements ActionListener {
         pack();
         setVisible(true);
 
+    }
+
+    private void mainPanelOnClose() {
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Iterator<model.Event> iterator = EventLog.getInstance().iterator();
+                while (iterator.hasNext()) {
+                    model.Event event = iterator.next();
+                    System.out.println(event.toString());
+                }
+                System.out.println("finished printing event log");
+            }
+        });
     }
 
     //smaller method for mainpanel setup that adds buttons

@@ -15,6 +15,7 @@ public class Journal {
 
     //EFFECTS: creates a new Journal with name and password.
     public Journal(String name, String password) {
+        EventLog.getInstance().logEvent(new Event("Journal created."));
         this.name = name;
         this.password = password;
         journals = new ArrayList<>();
@@ -22,6 +23,21 @@ public class Journal {
 
     //EFFECTS: creates a new journal entry with blank fields.
     public Journal() {
+        EventLog.getInstance().logEvent(new Event("Journal created."));
+        this.name = "";
+        this.password = "";
+        journals = new ArrayList<>();
+    }
+
+    //EFFECTS: creates a new journal entry, used temporarily
+    public Journal(int wanted) {
+        this.name = "";
+        this.password = "";
+        journals = new ArrayList<>();
+    }
+
+    //EFFECTS: creates a new journal entry, used temporarily
+    public Journal(String wanted) {
         this.name = "";
         this.password = "";
         journals = new ArrayList<>();
@@ -31,24 +47,40 @@ public class Journal {
     //MODIFIES: this journal.
     //EFFECTS: adds journal entry to journal.
     public void addEntry(JournalEntry j) {
-
+        EventLog.getInstance().logEvent(new Event("Added entry: " + j.getTitle()));
         journals.add(j);
     }
+
+    //REQUIRES: Unique journal entry (can't add the same object).
+    //MODIFIES: this journal.
+    //EFFECTS: adds journal entry to journal, doesn't log event, is temporary.
+    public void addEntry(JournalEntry j, int desired) {
+        journals.add(j);
+    }
+
+    //REQUIRES: Unique journal entry (can't add the same object).
+    //MODIFIES: this journal.
+    //EFFECTS: adds journal entry to journal, doesn't log event, is temporary.
+    public void addEntry(JournalEntry j, String desired) {
+        journals.add(j);
+    }
+
+
 
     //REQUIRES: Journal entry to exist in journal.
     //MODIFIES: this
     //EFFECTS: removes journal entry from journal.
     public void removeEntry(JournalEntry j) {
-
+        EventLog.getInstance().logEvent(new Event("Removed entry: " + j.getTitle()));
         journals.remove(j);
     }
 
     //EFFECTS: Creates a new journal, desiredTitle, that has all journal entries from original with title desired
     public Journal titleSearch(String desired) {
-        Journal desiredTitle = new Journal();
+        Journal desiredTitle = new Journal(desired);
         for (JournalEntry j: this.getJournals()) {
             if (desired.equals(j.getTitle())) {
-                desiredTitle.addEntry(j);
+                desiredTitle.addEntry(j, desired);
             }
         }
         return desiredTitle;
@@ -56,10 +88,10 @@ public class Journal {
 
     //EFFECTS: Creates a new journal, desiredMood, that has all journal entries with desired mood
     public Journal moodSearch(int desired) {
-        Journal desiredMood = new Journal();
+        Journal desiredMood = new Journal(desired);
         for (JournalEntry j: this.getJournals()) {
             if (j.getMood() == desired) {
-                desiredMood.addEntry(j);
+                desiredMood.addEntry(j, desired);
             }
         }
         return desiredMood;

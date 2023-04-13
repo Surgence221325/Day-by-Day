@@ -61,3 +61,28 @@ how does the user save the state of the application to file
 
 how does the user load the state of the application from file
 - click load
+
+Phase 4: Task 2
+Representative Sample showing adding and removing x to y:
+Thu Apr 13 10:45:58 MDT 2023
+Journal created.
+Thu Apr 13 10:46:11 MDT 2023
+Added entry: thank
+Thu Apr 13 10:46:21 MDT 2023
+Added entry: 10
+Thu Apr 13 10:46:27 MDT 2023
+Added entry: bad
+Thu Apr 13 10:46:35 MDT 2023
+Removed entry: bad
+finished printing event log
+
+
+Phase 4: Task 3
+
+There are a lot of changes I could've made in terms of refactoring my code for future scalability and current
+readability. Unfortunately, I kind of stuck with mistakes I made at the beginning of my project fearing that refactoring
+would break my code. To start, one objective for this journal project was to create multiple different "prompts," such
+prompts would be easily created had I made JournalEntry an abstract class and extended it depending on the type of 
+journalEntry desired. Similarly, I could create a super class for Journals or even another class allowing the user to
+have many different types of journals. I also wanted to add free writing pages, and drawing, which I was unable to
+accomplish.
