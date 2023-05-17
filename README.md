@@ -62,19 +62,7 @@ how does the user save the state of the application to file
 how does the user load the state of the application from file
 - click load
 
-Phase 4: Task 2
-Representative Sample showing adding and removing x to y:
-Thu Apr 13 10:45:58 MDT 2023
-Journal created.
-Thu Apr 13 10:46:11 MDT 2023
-Added entry: thank
-Thu Apr 13 10:46:21 MDT 2023
-Added entry: 10
-Thu Apr 13 10:46:27 MDT 2023
-Added entry: bad
-Thu Apr 13 10:46:35 MDT 2023
-Removed entry: bad
-finished printing event log
+
 
 
 Phase 4: Task 3
